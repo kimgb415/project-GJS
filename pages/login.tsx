@@ -22,7 +22,7 @@ export default function Login({ navigation }) {
       }
     });
     // navigation.navigate(whatIsNext);
-    navigation.navigate("FoodSelect");
+    navigation.navigate("FoodRecommend");
   };
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -55,7 +55,6 @@ export default function Login({ navigation }) {
       <View style={styles.submitButton}>
         <Button title="Submit" disabled={canSubmit} onPress={submitHandler} />
       </View>
-      {/* <Text>{user}</Text> */}
     </View>
   );
 }

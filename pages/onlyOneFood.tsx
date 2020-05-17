@@ -42,6 +42,7 @@ export default function OnlyOneFood({ route, navigation }) {
   });
   const [errorMsg, setErrorMsg] = useState("null");
   const [disabled, setDisabled] = useState(true);
+  const APIkey = "AIzaSyBJ_X6v3VjNA_02BHcs0bOTblwZ3kuQWPQ";
 
   useEffect(() => {
     if (Platform.OS === "android" && !Constants.isDevice) {
@@ -64,11 +65,11 @@ export default function OnlyOneFood({ route, navigation }) {
         });
 
         await fetch(
-          `https://nqnjwccsg0.execute-api.ap-northeast-2.amazonaws.com/beta_05_04/restaurant?latitude=${location.latitude}&longitude=${location.longitude}`
+          `https://maps.googleapis.com/maps/api/place/textsearch/json?query=restaurants&key=${APIkey}&region=1000&location=${location.latitude},${location.longitude}`
         )
           .then((response) => response.json())
           .then((res) => {
-            setRestaurant(res.body.results);
+            setRestaurant(res.results);
             setDisabled(false);
           });
       })();
@@ -102,6 +103,7 @@ export default function OnlyOneFood({ route, navigation }) {
           </View>
         </View>
       </View>
+      <Text>{restaurant[0].name}</Text>
     </View>
   );
 }

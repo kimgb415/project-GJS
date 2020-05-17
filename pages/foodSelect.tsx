@@ -34,17 +34,20 @@ export default function FoodSelect({ navigation }) {
       { id: "", rating: 0 },
     ],
   });
-  const [test, setTest] = useState(400);
+  const date = new Date().getTime();
+  const [duration, setDuration] = useState(0);
 
   const pressHandler = () => {
+    let newDate = new Date().getTime();
     sendHttpRequest(
       "PUT",
       "https://nqnjwccsg0.execute-api.ap-northeast-2.amazonaws.com/beta_05_12/user/rating",
       results
-    ).then((res) => setTest(res.statusCode));
+    );
     setCounting(counting + 1);
     if (counting >= 4) navigation.navigate("Main");
     setSliderSetting(true);
+    setDuration(newDate - date);
   };
 
   const slidingHandler = (value) => {
@@ -99,9 +102,9 @@ export default function FoodSelect({ navigation }) {
       <View style={styles.submitButton}>
         <Button title="Submit" onPress={pressHandler} />
       </View>
-      {/* <View style={{ flex: 1 }}>
-        <Text>{test}</Text>
-      </View> */}
+      <View style={{ flex: 1 }}>
+        <Text>{duration}</Text>
+      </View>
     </View>
   );
 }
