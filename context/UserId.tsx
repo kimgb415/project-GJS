@@ -2,10 +2,10 @@ import React, { createContext, useState } from "react";
 
 export const UserId = createContext();
 
-const UserIdProvider = (props) => {
+const UserIdProvider = (props: any) => {
   const [user, setUser] = useState(0);
 
-  const submitUserId = (id) => {
+  const submitUserId = (id: number) => {
     setUser(id);
   };
 

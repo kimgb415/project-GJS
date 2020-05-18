@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, View, Button, Text, Slider } from "react-native";
 import FoodWorldCup from "../component/foodWorldCup";
 import RatingSlider from "../component/slider";
-import { useSafeArea } from "react-native-safe-area-context";
 import { UserId } from "../context/UserId";
 import sendHttpRequest from "../API/sendHttpRequest";
 
@@ -45,12 +44,12 @@ export default function FoodSelect({ navigation }) {
       results
     );
     setCounting(counting + 1);
-    if (counting >= 4) navigation.navigate("Main");
+    // if (counting >= 4) navigation.navigate("Main");
     setSliderSetting(true);
     setDuration(newDate - date);
   };
 
-  const slidingHandler = (value) => {
+  const slidingHandler = (value: number) => {
     setResults({
       user: user,
       result: [
@@ -62,7 +61,7 @@ export default function FoodSelect({ navigation }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      let result = [{}, {}];
+      let result: any[];
       for (let i = 0; i < 2; i++) {
         await fetch(
           "https://nqnjwccsg0.execute-api.ap-northeast-2.amazonaws.com/beta_05_04/food-info"

@@ -1,9 +1,16 @@
 import React, { useState } from "react";
 import { Image, View, Text } from "react-native";
+import Food from "./foodClass";
 
 const OneFood = (props) => {
   const [widthValue, setWidthValue] = useState(100);
   const [heightValue, setHeightValue] = useState(100);
+  const food = new Food(
+    props.foodSource.key,
+    props.foodSource.foodname,
+    ["undefined"],
+    props.foodSource.source
+  );
 
   return (
     <View style={{ flex: 1, margin: 10 }}>
@@ -17,12 +24,12 @@ const OneFood = (props) => {
         <Image
           style={{ width: widthValue, height: heightValue }}
           source={{
-            uri: `data:image/png;base64,${props.foodSource.source}`,
+            uri: `data:image/png;base64,${food.image}`,
           }}
         />
       </View>
       <View style={{ flex: 1, marginLeft: 20 }}>
-        <Text>{props.foodSource.foodname}</Text>
+        <Text>{food.name}</Text>
       </View>
     </View>
   );
