@@ -6,10 +6,10 @@ const OneFood = (props) => {
   const [widthValue, setWidthValue] = useState(100);
   const [heightValue, setHeightValue] = useState(100);
   const food = new Food(
-    props.foodSource.key,
-    props.foodSource.foodname,
-    ["undefined"],
-    props.foodSource.source
+    props.foodSource.key, //id
+    props.foodSource.foodname, //name
+    ["undefined"], //manual
+    props.foodSource.source //image
   );
 
   return (
@@ -24,12 +24,12 @@ const OneFood = (props) => {
         <Image
           style={{ width: widthValue, height: heightValue }}
           source={{
-            uri: `data:image/png;base64,${food.image}`,
+            uri: `data:image/png;base64,${props.foodSource.source}`,
           }}
         />
       </View>
       <View style={{ flex: 1, marginLeft: 20 }}>
-        <Text>{food.name}</Text>
+        <Text>{props.foodSource.key}</Text>
       </View>
     </View>
   );

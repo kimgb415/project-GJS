@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { View, StyleSheet, Button, Platform, Text } from "react-native";
 import Constants from "expo-constants";
 import * as Location from "expo-location";
 import OneFood from "../component/oneFood";
+import { Duration } from "../context/howLong";
 
 const styles = StyleSheet.create({
   container: {
@@ -43,6 +44,8 @@ export default function OnlyOneFood({ route, navigation }) {
   const [errorMsg, setErrorMsg] = useState("null");
   const [disabled, setDisabled] = useState(true);
   const APIkey = "AIzaSyBJ_X6v3VjNA_02BHcs0bOTblwZ3kuQWPQ";
+
+  const { duration, startUpdate, durationUpdate } = useContext(Duration);
 
   useEffect(() => {
     if (Platform.OS === "android" && !Constants.isDevice) {

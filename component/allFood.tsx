@@ -11,7 +11,10 @@ const AllFood = (props) => {
         renderItem={(food) => (
           <TouchableOpacity
             style={{ flex: 1 }}
-            onPress={() => props.navigation.navigate("OnlyOneFood", food.item)}
+            onPress={() => {
+              let time = new Date().getTime();
+              props.navigation.navigate("OnlyOneFood", food.item);
+            }}
           >
             <OneFood key={food.item.key} foodSource={food.item} />
           </TouchableOpacity>

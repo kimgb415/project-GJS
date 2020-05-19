@@ -1,7 +1,6 @@
 import "react-native-gesture-handler";
-import * as React from "react";
-import { Component } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { useContext } from "react";
+import { StyleSheet, TouchableOpacity, Text, View } from "react-native";
 import BasicInfo from "./pages/basicInfo";
 import FoodSelect from "./pages/foodSelect";
 import { NavigationContainer } from "@react-navigation/native";
@@ -13,13 +12,14 @@ import Recipe from "./pages/recipe";
 import OnlyOneFood from "./pages/onlyOneFood";
 import UserIdProvider from "./context/UserId";
 import Login from "./pages/login";
+import DurationProvider, { Duration } from "./context/howLong";
 
 const Stack = createStackNavigator();
 
-export default class App extends Component {
-  render() {
-    return (
-      <UserIdProvider>
+export default function App() {
+  return (
+    <UserIdProvider>
+      <DurationProvider>
         <NavigationContainer>
           <Stack.Navigator>
             <Stack.Screen
@@ -57,15 +57,42 @@ export default class App extends Component {
                 },
               }}
             />
-            <Stack.Screen name="FoodRecommend" component={FoodRecommend} />
-            <Stack.Screen name="OnlyOneFood" component={OnlyOneFood} />
+            <Stack.Screen
+              name="FoodRecommend"
+              component={FoodRecommend}
+              options={{
+                gestureEnabled: false,
+                headerLeft: () => {
+                  <View></View>;
+                },
+              }}
+            />
+            <Stack.Screen
+              name="OnlyOneFood"
+              component={OnlyOneFood}
+              options={{
+                gestureEnabled: false,
+                headerLeft: () => {
+                  return (
+                    <TouchableOpacity
+                      style={{ flex: 1, alignContent: "center" }}
+                      // onPress={({ navigation }) =>
+                      //   navigation.navigate("FoodRecommend")
+                      // }
+                    >
+                      <Text>Back</Text>
+                    </TouchableOpacity>
+                  );
+                },
+              }}
+            />
             <Stack.Screen name="Map" component={Map} />
             <Stack.Screen name="Recipe" component={Recipe} />
           </Stack.Navigator>
         </NavigationContainer>
-      </UserIdProvider>
-    );
-  }
+      </DurationProvider>
+    </UserIdProvider>
+  );
 }
 
 const styles = StyleSheet.create({

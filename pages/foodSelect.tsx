@@ -33,20 +33,16 @@ export default function FoodSelect({ navigation }) {
       { id: "", rating: 0 },
     ],
   });
-  const date = new Date().getTime();
-  const [duration, setDuration] = useState(0);
 
   const pressHandler = () => {
-    let newDate = new Date().getTime();
     sendHttpRequest(
       "PUT",
       "https://nqnjwccsg0.execute-api.ap-northeast-2.amazonaws.com/beta_05_12/user/rating",
       results
     );
     setCounting(counting + 1);
-    // if (counting >= 4) navigation.navigate("Main");
+    if (counting >= 4) navigation.navigate("FoodRecommend");
     setSliderSetting(true);
-    setDuration(newDate - date);
   };
 
   const slidingHandler = (value: number) => {
@@ -61,7 +57,7 @@ export default function FoodSelect({ navigation }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      let result: any[];
+      let result = [{}, {}];
       for (let i = 0; i < 2; i++) {
         await fetch(
           "https://nqnjwccsg0.execute-api.ap-northeast-2.amazonaws.com/beta_05_04/food-info"
@@ -86,7 +82,7 @@ export default function FoodSelect({ navigation }) {
     <View style={styles.container}>
       <View style={{ flex: 3 }}>
         <FoodWorldCup navigation={navigation} foodSource={imageInfo[0]} />
-        <Text>{imageInfo[0].foodname}</Text>
+        <Text>{imageInfo[0].key}</Text>
       </View>
       <View style={{ flex: 1 }}>
         <RatingSlider
@@ -96,13 +92,10 @@ export default function FoodSelect({ navigation }) {
       </View>
       <View style={{ flex: 3 }}>
         <FoodWorldCup navigation={navigation} foodSource={imageInfo[1]} />
-        <Text>{imageInfo[1].foodname}</Text>
+        <Text>{imageInfo[1].key}</Text>
       </View>
       <View style={styles.submitButton}>
         <Button title="Submit" onPress={pressHandler} />
-      </View>
-      <View style={{ flex: 1 }}>
-        <Text>{duration}</Text>
       </View>
     </View>
   );
