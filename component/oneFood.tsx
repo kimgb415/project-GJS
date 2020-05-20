@@ -5,12 +5,6 @@ import Food from "./foodClass";
 const OneFood = (props) => {
   const [widthValue, setWidthValue] = useState(100);
   const [heightValue, setHeightValue] = useState(100);
-  const food = new Food(
-    props.foodSource.key, //id
-    props.foodSource.foodname, //name
-    ["undefined"], //manual
-    props.foodSource.source //image
-  );
 
   return (
     <View style={{ flex: 1, margin: 10 }}>

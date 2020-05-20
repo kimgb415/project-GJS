@@ -2,16 +2,15 @@ import React, { createContext, useState } from "react";
 
 export const Duration = createContext();
 
-const DurationProvider = (props: any) => {
+const DurationProvider = (props) => {
   const [duration, setDuration] = useState(0);
   const [start, setStart] = useState(0);
 
-  const startUpdate = (startTime: number) => {
+  const startUpdate = (startTime) => {
     setStart(startTime);
   };
 
-  const durationUpdate = () => {
-    const end = new Date().getTime();
+  const durationUpdate = (end) => {
     setDuration(end - start);
   };
 

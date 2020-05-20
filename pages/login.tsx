@@ -25,7 +25,7 @@ export default function Login({ navigation }) {
     navigation.navigate("FoodRecommend");
   };
 
-  ///////////////////////////////////////////////////////////////////////////////////////////////////
+
   useEffect(() => {
     sendHttpRequest(
       "POST",
@@ -40,7 +40,7 @@ export default function Login({ navigation }) {
       }
     });
   }, [user]);
-  ///////////////////////////////////////////////////////////////////////////////////////////////////
+
 
   return (
     <View style={styles.screen}>

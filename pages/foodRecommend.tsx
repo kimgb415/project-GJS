@@ -1,6 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { View, StyleSheet, ActivityIndicator } from "react-native";
-import AllFood from "../component/allFood";
+import React, { useState, useEffect, useContext } from "react";
+import {
+  View,
+  StyleSheet,
+  ActivityIndicator,
+  FlatList,
+  TouchableOpacity,
+} from "react-native";
+import { Duration } from "../context/howLong";
+import OneFood from "../component/oneFood";
 
 const styles = StyleSheet.create({
   container: {
@@ -19,6 +26,7 @@ export default function FoodRecommend({ navigation }) {
     { key: "4", foodname: "food4", source: undefined },
   ]);
   const [isLoading, setIsLoaindg] = useState(true);
+  const { startUpdate } = useContext(Duration);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,7 +57,25 @@ export default function FoodRecommend({ navigation }) {
         <ActivityIndicator size="large" color="#0000ff" />
       ) : (
         <View style={{ flex: 3 }}>
-          <AllFood allInfo={imageInfo} navigation={navigation} />
+          <View style={{ flex: 1 }}>
+            <FlatList
+              style={{ height: "100%" }}
+              keyExtractor={(item, index) => item.key}
+              data={imageInfo}
+              renderItem={(food) => (
+                <TouchableOpacity
+                  style={{ flex: 1 }}
+                  onPress={() => {
+                    let time = new Date().getTime();
+                    startUpdate(time);
+                    navigation.navigate("OnlyOneFood", food.item);
+                  }}
+                >
+                  <OneFood key={food.item.key} foodSource={food.item} />
+                </TouchableOpacity>
+              )}
+            />
+          </View>
         </View>
       )}
     </View>
