@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Image, View, Text } from "react-native";
-import Food from "./foodClass";
 
 const OneFood = (props) => {
   const [widthValue, setWidthValue] = useState(100);

@@ -66,13 +66,16 @@ export default function Routes() {
               headerLeft: () => {
                 <View></View>;
               },
+              
             }}
+
           />
+          <Stack.Screen name="OnlyOneFood" component={OnlyOneFood} />
+          <Stack.Screen name="Map" component={Map} />
           <Stack.Screen
-            name="OnlyOneFood"
-            component={OnlyOneFood}
-            options={(props) => {
-              const { navigation } = props;
+            name="Recipe"
+            component={Recipe}
+            options={({ navigation }) => {
               return {
                 headerLeft: () => (
                   <TouchableOpacity
@@ -89,19 +92,8 @@ export default function Routes() {
               };
             }}
           />
-          <Stack.Screen name="Map" component={Map} />
-          <Stack.Screen name="Recipe" component={Recipe} />
         </Stack.Navigator>
       </NavigationContainer>
     </UserIdProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

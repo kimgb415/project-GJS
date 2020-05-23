@@ -6,7 +6,6 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native";
-import { Duration } from "../context/howLong";
 import OneFood from "../component/oneFood";
 
 const styles = StyleSheet.create({
@@ -20,14 +19,12 @@ const styles = StyleSheet.create({
 
 export default function FoodRecommend({ navigation }) {
   const [imageInfo, setImageInfo] = useState([
-    { key: "1", foodname: "food1", source: undefined },
-    { key: "2", foodname: "food2", source: undefined },
-    { key: "3", foodname: "food3", source: undefined },
-    { key: "4", foodname: "food4", source: undefined },
+    { key: "1", foodname: "food1", source: undefined, recipe: "undefined" },
+    { key: "2", foodname: "food2", source: undefined, recipe: "undefined" },
+    { key: "3", foodname: "food3", source: undefined, recipe: "undefined" },
+    { key: "4", foodname: "food4", source: undefined, recipe: "undefined" },
   ]);
   const [isLoading, setIsLoaindg] = useState(true);
-  const { startUpdate } = useContext(Duration);
-
   useEffect(() => {
     const fetchData = async () => {
       let result = [{}, {}, {}, {}];
@@ -41,6 +38,7 @@ export default function FoodRecommend({ navigation }) {
               key: res["body"]["id"],
               foodname: res["body"]["RCP_NM"],
               source: res["body"]["image_data"]["ATT_FILE_NO_MK"],
+              recipe: res["body"]["MANUAL01"],
             };
             result[i] = single;
           });
@@ -65,11 +63,7 @@ export default function FoodRecommend({ navigation }) {
               renderItem={(food) => (
                 <TouchableOpacity
                   style={{ flex: 1 }}
-                  onPress={() => {
-                    let time = new Date().getTime();
-                    startUpdate(time);
-                    navigation.navigate("OnlyOneFood", food.item);
-                  }}
+                  onPress={() => navigation.navigate("OnlyOneFood", food.item)}
                 >
                   <OneFood key={food.item.key} foodSource={food.item} />
                 </TouchableOpacity>

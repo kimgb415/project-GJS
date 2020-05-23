@@ -3,6 +3,7 @@ import { View, StyleSheet, Button, Platform, Text } from "react-native";
 import Constants from "expo-constants";
 import * as Location from "expo-location";
 import OneFood from "../component/oneFood";
+import { Duration } from "../context/howLong";
 
 const styles = StyleSheet.create({
   container: {
@@ -42,6 +43,8 @@ export default function OnlyOneFood({ route, navigation }) {
   });
   const [errorMsg, setErrorMsg] = useState("null");
   const [disabled, setDisabled] = useState(true);
+  const { startUpdate } = useContext(Duration);
+
   const APIkey = "AIzaSyBJ_X6v3VjNA_02BHcs0bOTblwZ3kuQWPQ";
 
   useEffect(() => {
@@ -86,7 +89,11 @@ export default function OnlyOneFood({ route, navigation }) {
           <View style={styles.button}>
             <Button
               title="Recipe"
-              onPress={() => navigation.navigate("Recipe")}
+              onPress={() => {
+                let time = new Date().getTime();
+                startUpdate(time);
+                navigation.navigate("Recipe", { recipe: route.params.recipe });
+              }}
             />
           </View>
           <View style={styles.button}>
@@ -103,7 +110,6 @@ export default function OnlyOneFood({ route, navigation }) {
           </View>
         </View>
       </View>
-      <Text>{restaurant[0].name}</Text>
     </View>
   );
 }
