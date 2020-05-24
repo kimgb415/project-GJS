@@ -44,6 +44,18 @@ export default function OnlyOneFood({ route, navigation }) {
   const [errorMsg, setErrorMsg] = useState("null");
   const [disabled, setDisabled] = useState(true);
   const { startUpdate } = useContext(Duration);
+  const [previousDimension, setPreviousDimension] = useState({
+    width: 0,
+    heigth: 0,
+    x: 0,
+    y: 0,
+  });
+  const [dimension, setDimension] = useState({
+    width: 0,
+    heigth: 0,
+    x: 0,
+    y: 0,
+  });
 
   const APIkey = "AIzaSyBJ_X6v3VjNA_02BHcs0bOTblwZ3kuQWPQ";
 
@@ -81,8 +93,18 @@ export default function OnlyOneFood({ route, navigation }) {
 
   return (
     <View style={styles.container}>
-      <View style={{ flex: 3 }}>
-        <OneFood foodSource={route.params} />
+      <View
+        style={{ flex: 3 }}
+        onLayout={(e) => {
+          setDimension({
+            width: e.nativeEvent.layout.width,
+            heigth: e.nativeEvent.layout.height,
+            x: e.nativeEvent.layout.x,
+            y: e.nativeEvent.layout.y,
+          });
+        }}
+      >
+        <OneFood foodSource={route.params} imageDimension={dimension} />
       </View>
       <View style={{ flex: 1 }}>
         <View style={styles.buttonContainer}>

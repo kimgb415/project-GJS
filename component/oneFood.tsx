@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Image, View, Text } from "react-native";
 
-const OneFood = (props) => {
+const OneFood = ({ foodSource, imageDimension }) => {
   const [widthValue, setWidthValue] = useState(100);
   const [heightValue, setHeightValue] = useState(100);
 
@@ -17,12 +17,12 @@ const OneFood = (props) => {
         <Image
           style={{ width: widthValue, height: heightValue }}
           source={{
-            uri: `data:image/png;base64,${props.foodSource.source}`,
+            uri: `data:image/png;base64,${foodSource.source}`,
           }}
         />
       </View>
       <View style={{ flex: 1, marginLeft: 20 }}>
-        <Text>{props.foodSource.key}</Text>
+        <Text>{foodSource.key}</Text>
       </View>
     </View>
   );
