@@ -1,4 +1,4 @@
-import React, { createContext, useState, useCallback } from "react";
+import React, { createContext, useState } from "react";
 
 export const DimensionConext = createContext();
 
@@ -7,8 +7,8 @@ export default function DimensionProvider(props) {
   const [previous, setPrevious] = useState();
   const [imageSource, setImageSource] = useState();
 
-  const currentUpate = (dimension) => {
-    setCurrent(dimension);
+  const currentUpdate = (dimension) => {
+    setCurrent(dimension[0]);
   };
 
   const previousUpdate = (dimension) => {
@@ -24,7 +24,7 @@ export default function DimensionProvider(props) {
       value={{
         current: current,
         previous: previous,
-        currentUpate: currentUpate,
+        currentUpdate: currentUpdate,
         previousUpdate: previousUpdate,
         imageSource: imageSource,
         imageSourceUpdate: imageSourceUpdate,

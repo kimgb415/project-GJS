@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Image, View, Text } from "react-native";
 
-const OneFood = ({ foodSource, imageDimension }) => {
+const OneFood = ({ foodSource }) => {
   const [widthValue, setWidthValue] = useState(100);
   const [heightValue, setHeightValue] = useState(100);
 
   return (
-    <View style={{ flex: 1, margin: 10 }}>
+    <View style={{ flex: 1}}>
       <View
         onLayout={(event) => {
           setWidthValue(event.nativeEvent.layout.width);
