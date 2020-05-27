@@ -12,7 +12,7 @@ const OneFood = ({ foodSource }) => {
           setWidthValue(event.nativeEvent.layout.width);
           setHeightValue(event.nativeEvent.layout.height);
         }}
-        style={{ flex: 5, margin: 10 }}
+        style={{ flex: 5 }}
       >
         <Image
           style={{ width: widthValue, height: heightValue }}
@@ -21,7 +21,7 @@ const OneFood = ({ foodSource }) => {
           }}
         />
       </View>
-      <View style={{ flex: 1, marginLeft: 20 }}>
+      <View style={{ flex: 1 }}>
         <Text>{foodSource.key}</Text>
       </View>
     </View>

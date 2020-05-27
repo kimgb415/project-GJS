@@ -57,34 +57,43 @@ export default function FoodRecommend({ navigation }) {
       {isLoading ? (
         <ActivityIndicator size="large" color="#0000ff" />
       ) : (
-          <View style={{ flex: 1 }}>
-            <FlatList
-              style={{ flex: 1 }}
-              keyExtractor={(item, index) => item.key}
-              data={imageInfo}
-              renderItem={({item}) => (
+        <View style={{ flex: 1 }}>
+          <FlatList
+            style={{ flex: 1 }}
+            keyExtractor={(item, index) => item.key}
+            data={imageInfo}
+            renderItem={({ item }) => (
+              <View
+                onLayout={(e) => {
+                  setDimension([
+                    ...dimension,
+                    {
+                      key: item.key,
+                      width: e.nativeEvent.layout.width,
+                      height: e.nativeEvent.layout.height,
+                      x: e.nativeEvent.layout.x,
+                      y: e.nativeEvent.layout.y,
+                    },
+                  ]);
+                }}
+                style={{ flex: 1 }}
+              >
                 <TouchableOpacity
                   style={{ flex: 1 }}
                   onPress={() => {
-                    currentUpdate(dimension.filter((single) => single.key == item.key));
+                    currentUpdate(
+                      dimension.filter((single) => single.key == item.key)
+                    );
                     imageSourceUpdate(item.source);
                     navigation.navigate("OnlyOneFood", item);
-                  }}
-                  onLayout={(e) => {
-                    setDimension([...dimension, {
-                      key: item.key,
-                      width: e.nativeEvent.layout.width,
-                      heigth: e.nativeEvent.layout.height,
-                      x: e.nativeEvent.layout.x,
-                      y: e.nativeEvent.layout.y,
-                    }]);
                   }}
                 >
                   <OneFood foodSource={item} />
                 </TouchableOpacity>
-              )}
-            />
-          </View>
+              </View>
+            )}
+          />
+        </View>
       )}
     </View>
   );

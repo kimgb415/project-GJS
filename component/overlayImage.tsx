@@ -4,34 +4,33 @@ import { View, Text, Animated } from "react-native";
 
 export default function OverlayImage() {
   const { current, imageSource } = useContext(DimensionConext);
-  const dimension = new Animated.Value(0);
+  const dimension = new Animated.ValueXY();
 
   useEffect(() => {
-    Animated.timing(dimension, { toValue: 1, duration: 2000 }).start();
+    Animated.timing(dimension, {
+      toValue: { x: 1, y: 1 },
+      duration: 2000,
+    }).start();
   }, []);
 
   return (
-    
-    <View style={{ width: current.width, height: current.height, backgroundColor:"tomato" }}>
-      {/* <Animated.Image
+    <View style={{ flex: 1 }}>
+      <Animated.Image
         style={{
-          flex: 1,
-          transform: [
-            {
-              scale: dimension.interpolate({
-                inputRange: [0, 1],
-                outputRange: [1, 2],
-              },
-              ),
-            },
-          ],
-          
+          width: dimension.x.interpolate({
+            inputRange: [0, 1],
+            outputRange: [current.width, 500],
+          }),
+          height: dimension.y.interpolate({
+            inputRange: [0, 1],
+            outputRange: [current.height, 600],
+          }),
+          transform: [{ translateY: current.y }],
         }}
         source={{
           uri: `data:image/png;base64,${imageSource}`,
         }}
-      /> */}
-    <Text style={{fontSize: 200}}>{current.key}</Text>
+      />
     </View>
   );
 }
