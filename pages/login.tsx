@@ -22,9 +22,8 @@ export default function Login({ navigation }) {
       }
     });
     // navigation.navigate(whatIsNext);
-    navigation.navigate("FoodRecommend");
+    navigation.navigate("Recommend");
   };
-
 
   useEffect(() => {
     sendHttpRequest(
@@ -40,7 +39,6 @@ export default function Login({ navigation }) {
       }
     });
   }, [user]);
-
 
   return (
     <View style={styles.screen}>

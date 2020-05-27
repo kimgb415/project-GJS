@@ -15,6 +15,7 @@ import Login from "../pages/login";
 import { Duration } from "../context/howLong";
 import DimensionProvider from "../context/dimensionContext";
 import OverlayImage from "../component/overlayImage";
+import Recommend from "../pages/recommend";
 
 const Stack = createStackNavigator();
 
@@ -127,6 +128,7 @@ export default function Routes() {
                 };
               }}
             />
+            <Stack.Screen name="Recommend" component={Recommend} />
           </Stack.Navigator>
         </NavigationContainer>
       </UserIdProvider>
