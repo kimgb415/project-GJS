@@ -21,8 +21,8 @@ export default function Login({ navigation }) {
         setWhatIsNext(value);
       }
     });
-    navigation.navigate("FoodSelect");
-    // navigation.navigate("FoodRecommend");
+    // navigation.navigate("FoodSelect");
+    navigation.navigate("FoodRecommend");
   };
 
   useEffect(() => {

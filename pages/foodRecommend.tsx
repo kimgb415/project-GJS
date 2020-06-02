@@ -5,6 +5,7 @@ import {
   ActivityIndicator,
   FlatList,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import OneFood from "../component/oneFood";
 import { DimensionConext } from "../context/dimensionContext";
@@ -33,6 +34,7 @@ export default function FoodRecommend({ navigation }) {
     { key: "7", foodname: "food7", source: undefined, recipe: "undefined" },
   ]);
   const [isLoading, setIsLoaindg] = useState(true);
+  const [screenWidth, setScreenWidth] = useState(0);
   const [dimension, setDimension] = useState([
     {
       width: 0,
@@ -60,6 +62,7 @@ export default function FoodRecommend({ navigation }) {
             result[i] = single;
           });
       }
+      setScreenWidth(Math.round(Dimensions.get("screen").width));
       setImageInfo(result);
       setIsLoaindg(false);
     };
@@ -71,36 +74,34 @@ export default function FoodRecommend({ navigation }) {
       {isLoading ? (
         <ActivityIndicator size="large" color="#0000ff" />
       ) : (
-        <View style={{ flex: 3 }}>
-          <View style={{ flex: 1 }}>
-            <FlatList
-              style={{ height: "100%" }}
-              keyExtractor={(item, index) => item.key}
-              data={imageInfo}
-              renderItem={(food) => (
-                <TouchableOpacity
-                  style={{ flex: 1 }}
-                  onPress={() => {
-                    imageSourceUpdate(food.item.source);
-                    foodIdUpdate(food.item.key);
-                    navigation.navigate("OnlyOneFood", food.item);
-                  }}
-                  onLayout={(e) => {
-                    setDimension([
-                      {
-                        width: e.nativeEvent.layout.width,
-                        heigth: e.nativeEvent.layout.height,
-                        x: e.nativeEvent.layout.x,
-                        y: e.nativeEvent.layout.y,
-                      },
-                    ]);
-                  }}
-                >
-                  <OneFood foodSource={food.item} imageDimension={dimension} />
-                </TouchableOpacity>
-              )}
-            />
-          </View>
+        <View style={{ flex: 1 }}>
+          <FlatList
+            style={{ height: "100%" }}
+            keyExtractor={(item, index) => item.key}
+            data={imageInfo}
+            renderItem={(food) => (
+              <TouchableOpacity
+                style={{ height: screenWidth * 0.75, width: screenWidth }}
+                onPress={() => {
+                  imageSourceUpdate(food.item.source);
+                  foodIdUpdate(food.item.key);
+                  navigation.navigate("OnlyOneFood", food.item);
+                }}
+                onLayout={(e) => {
+                  setDimension([
+                    {
+                      width: e.nativeEvent.layout.width,
+                      heigth: e.nativeEvent.layout.height,
+                      x: e.nativeEvent.layout.x,
+                      y: e.nativeEvent.layout.y,
+                    },
+                  ]);
+                }}
+              >
+                <OneFood foodSource={food.item} imageDimension={dimension} />
+              </TouchableOpacity>
+            )}
+          />
         </View>
       )}
     </View>
