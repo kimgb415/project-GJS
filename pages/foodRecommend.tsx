@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import OneFood from "../component/oneFood";
 import { DimensionConext } from "../context/dimensionContext";
+import { Duration } from "../context/howLong";
 
 const styles = StyleSheet.create({
   container: {
@@ -21,11 +22,15 @@ const styles = StyleSheet.create({
 
 export default function FoodRecommend({ navigation }) {
   const { imageSourceUpdate } = useContext(DimensionConext);
+  const { foodIdUpdate } = useContext(Duration);
   const [imageInfo, setImageInfo] = useState([
     { key: "1", foodname: "food1", source: undefined, recipe: "undefined" },
     { key: "2", foodname: "food2", source: undefined, recipe: "undefined" },
     { key: "3", foodname: "food3", source: undefined, recipe: "undefined" },
     { key: "4", foodname: "food4", source: undefined, recipe: "undefined" },
+    { key: "5", foodname: "food5", source: undefined, recipe: "undefined" },
+    { key: "6", foodname: "food6", source: undefined, recipe: "undefined" },
+    { key: "7", foodname: "food7", source: undefined, recipe: "undefined" },
   ]);
   const [isLoading, setIsLoaindg] = useState(true);
   const [dimension, setDimension] = useState([
@@ -39,8 +44,8 @@ export default function FoodRecommend({ navigation }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      let result = [{}, {}, {}, {}];
-      for (let i = 0; i < 4; i++) {
+      let result = [{}];
+      for (let i = 0; i < 7; i++) {
         await fetch(
           "https://nqnjwccsg0.execute-api.ap-northeast-2.amazonaws.com/beta_05_04/food-info"
         )
@@ -77,6 +82,7 @@ export default function FoodRecommend({ navigation }) {
                   style={{ flex: 1 }}
                   onPress={() => {
                     imageSourceUpdate(food.item.source);
+                    foodIdUpdate(food.item.key);
                     navigation.navigate("OnlyOneFood", food.item);
                   }}
                   onLayout={(e) => {

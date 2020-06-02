@@ -19,19 +19,17 @@ const styles = StyleSheet.create({
 });
 
 export default function FoodSelect({ navigation }) {
-  const [imageInfo, setImageInfo] = useState([
-    { key: "1", foodname: "food1", source: undefined },
-    { key: "2", foodname: "food2", source: undefined },
-  ]);
+  const [imageInfo, setImageInfo] = useState({
+    key: "1",
+    foodname: "food1",
+    source: undefined,
+  });
   const [counting, setCounting] = useState(0);
   const [sliderSetting, setSliderSetting] = useState(true);
   const { user } = useContext(UserId);
   const [results, setResults] = useState({
     user: user,
-    result: [
-      { id: "", rating: 0 },
-      { id: "", rating: 0 },
-    ],
+    result: { id: "", rating: 0 },
   });
 
   const pressHandler = () => {
@@ -41,38 +39,30 @@ export default function FoodSelect({ navigation }) {
       results
     );
     setCounting(counting + 1);
-    if (counting >= 4) navigation.navigate("FoodRecommend");
+    if (counting >= 8) navigation.navigate("FoodRecommend");
     setSliderSetting(true);
   };
 
   const slidingHandler = (value: number) => {
     setResults({
       user: user,
-      result: [
-        { id: imageInfo[0].key, rating: 6 - value },
-        { id: imageInfo[1].key, rating: value },
-      ],
+      result: { id: imageInfo.key, rating: value },
     });
   };
 
   useEffect(() => {
     const fetchData = async () => {
-      let result = [{}, {}];
-      for (let i = 0; i < 2; i++) {
-        await fetch(
-          "https://nqnjwccsg0.execute-api.ap-northeast-2.amazonaws.com/beta_05_04/food-info"
-        )
-          .then((res) => res.json())
-          .then((res) => {
-            let single = {
-              key: res["body"]["id"],
-              foodname: res["body"]["RCP_NM"],
-              source: res["body"]["image_data"]["ATT_FILE_NO_MK"],
-            };
-            result[i] = single;
+      await fetch(
+        "https://nqnjwccsg0.execute-api.ap-northeast-2.amazonaws.com/beta_05_04/food-info"
+      )
+        .then((res) => res.json())
+        .then((res) => {
+          setImageInfo({
+            key: res["body"]["id"],
+            foodname: res["body"]["RCP_NM"],
+            source: res["body"]["image_data"]["ATT_FILE_NO_MK"],
           });
-      }
-      setImageInfo(result);
+        });
       setSliderSetting(false);
     };
     fetchData();
@@ -81,18 +71,14 @@ export default function FoodSelect({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={{ flex: 3 }}>
-        <FoodWorldCup navigation={navigation} foodSource={imageInfo[0]} />
-        <Text>{imageInfo[0].key}</Text>
+        <FoodWorldCup navigation={navigation} foodSource={imageInfo} />
+        <Text>{imageInfo.key}</Text>
       </View>
       <View style={{ flex: 1 }}>
         <RatingSlider
           onSlidingComplete={slidingHandler}
           sliderSetting={sliderSetting}
         />
-      </View>
-      <View style={{ flex: 3 }}>
-        <FoodWorldCup navigation={navigation} foodSource={imageInfo[1]} />
-        <Text>{imageInfo[1].key}</Text>
       </View>
       <View style={styles.submitButton}>
         <Button title="Submit" onPress={pressHandler} />

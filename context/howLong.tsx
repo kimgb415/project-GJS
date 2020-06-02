@@ -4,10 +4,15 @@ export const Duration = createContext();
 
 const DurationProvider = (props) => {
   const [duration, setDuration] = useState(0);
+  const [foodId, setFoodId] = useState(null);
   const [start, setStart] = useState(0);
 
   const startUpdate = (startTime) => {
     setStart(startTime);
+  };
+
+  const foodIdUpdate = (id) => {
+    setFoodId(id);
   };
 
   const durationUpdate = (end) => {
@@ -19,6 +24,8 @@ const DurationProvider = (props) => {
       value={{
         duration: duration,
         durationUpdate: durationUpdate,
+        foodId: foodId,
+        foodIdUpdate: foodIdUpdate,
         startUpdate: startUpdate,
       }}
     >
