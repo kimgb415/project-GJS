@@ -90,8 +90,8 @@ export default function FoodRecommend({ navigation }) {
                 onLayout={(e) => {
                   setDimension([
                     {
-                      width: e.nativeEvent.layout.width,
-                      heigth: e.nativeEvent.layout.height,
+                      width: screenWidth,
+                      heigth: screenWidth * 0.75,
                       x: e.nativeEvent.layout.x,
                       y: e.nativeEvent.layout.y,
                     },

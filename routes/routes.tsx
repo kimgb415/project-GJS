@@ -41,6 +41,21 @@ export default function Routes() {
     sendHttpRequest("Post", "uri", durationInfo);
   };
 
+  const forFade = ({ current, closing }) => ({
+    cardStyle: {
+      opacity: current.progress,
+    },
+    overlayStyle: {
+      opacity: 1 - current.progress,
+    },
+  });
+  const config = {
+    animation: "timing",
+    config: {
+      duration: 2000,
+    },
+  };
+
   return (
     <DimensionProvider>
       <NavigationContainer>
@@ -81,7 +96,24 @@ export default function Routes() {
             }}
           />
           <Stack.Screen name="FoodRecommend" component={FoodRecommend} />
-          <Stack.Screen name="OnlyOneFood" component={OnlyOneFood} />
+          <Stack.Screen
+            name="OnlyOneFood"
+            component={OnlyOneFood}
+            options={({ route, navigation }) => {
+              return {
+                gestureEnabled: false,
+                cardOverlayEnabled: true,
+                cardOverlay: () => {
+                  return <OverlayImage />;
+                },
+                cardStyleInterpolator: forFade,
+                transitionSpec: {
+                  open: config,
+                  close: config,
+                },
+              };
+            }}
+          />
           <Stack.Screen name="Map" component={Map} />
           <Stack.Screen
             name="Recipe"
