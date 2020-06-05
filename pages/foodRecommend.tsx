@@ -11,6 +11,7 @@ import {
 import OneFood from "../component/oneFood";
 import { DimensionConext } from "../context/dimensionContext";
 import { Duration } from "../context/howLong";
+import sendHttpRequest from "../API/sendHttpRequest";
 
 const styles = StyleSheet.create({
   container: {
@@ -44,6 +45,10 @@ export default function FoodRecommend({ navigation }) {
       y: 0,
     },
   ]);
+
+  const sendItemClicked = (foodId) => {
+    sendHttpRequest("POST", "uri", { foodId: foodId });
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -89,6 +94,7 @@ export default function FoodRecommend({ navigation }) {
                   startUpdate(startTime);
                   imageSourceUpdate(food.item.source);
                   foodIdUpdate(food.item.key);
+                  sendItemClicked(food.item.key);
                   navigation.navigate("Recipe", food.item);
                 }}
                 onLayout={(e) => {
