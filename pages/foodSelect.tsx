@@ -39,7 +39,7 @@ export default function FoodSelect({ navigation }) {
       results
     );
     setCounting(counting + 1);
-    if (counting >= 8) navigation.navigate("FoodRecommend");
+    if (counting >= 5) navigation.navigate("FoodRecommend");
     setSliderSetting(true);
   };
 
@@ -59,8 +59,8 @@ export default function FoodSelect({ navigation }) {
         .then((res) => {
           setImageInfo({
             key: res["body"]["id"],
-            foodname: res["body"]["RCP_NM"],
-            source: res["body"]["image_data"]["ATT_FILE_NO_MK"],
+            foodname: res["body"]["name"],
+            source: res["body"]["main_img"],
           });
         });
       setSliderSetting(false);

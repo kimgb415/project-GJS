@@ -34,12 +34,12 @@ function Recipe({ route }) {
   }, []);
 
   useEffect(() => {
-    if (time > 5) {
+    if (time == 10) {
       setTest("true");
       let eventTime = new Date();
       sendHttpRequest(
         "POST",
-        "https://nqnjwccsg0.execute-api.ap-northeast-2.amazonaws.com/06-05-demo",
+        "https://nqnjwccsg0.execute-api.ap-northeast-2.amazonaws.com/06-05-demo/user/event",
         {
           eventName: "10s",
           time: eventTime,

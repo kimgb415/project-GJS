@@ -73,7 +73,7 @@ export default function BasicInfo({ navigation }) {
       <View style={styles.submitButton}>
         <Button
           title="Submit"
-          // disabled={buttonClickable}
+          disabled={buttonClickable}
           onPress={() => {
             sendHttpRequest(
               "POST",

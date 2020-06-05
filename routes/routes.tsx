@@ -43,7 +43,7 @@ export default function Routes() {
   const sendFavourite = (time, foodId) => {
     sendHttpRequest(
       "POST",
-      "https://nqnjwccsg0.execute-api.ap-northeast-2.amazonaws.com/06-05-demo",
+      "https://nqnjwccsg0.execute-api.ap-northeast-2.amazonaws.com/06-05-demo/user/event",
       {
         eventName: "favourite",
         time: time,
@@ -107,7 +107,16 @@ export default function Routes() {
               },
             }}
           />
-          <Stack.Screen name="FoodRecommend" component={FoodRecommend} />
+          <Stack.Screen
+            name="FoodRecommend"
+            component={FoodRecommend}
+            options={{
+              gestureEnabled: false,
+              headerLeft: () => {
+                <View></View>;
+              },
+            }}
+          />
           <Stack.Screen name="OnlyOneFood" component={OnlyOneFood} />
           <Stack.Screen name="Map" component={Map} />
           <Stack.Screen
