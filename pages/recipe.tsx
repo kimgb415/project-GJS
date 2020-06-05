@@ -37,12 +37,16 @@ function Recipe({ route }) {
     if (time > 5) {
       setTest("true");
       let eventTime = new Date();
-      sendHttpRequest("POST", "uri", {
-        eventName: "10s",
-        time: eventTime,
-        user: user,
-        foodId: foodId,
-      });
+      sendHttpRequest(
+        "POST",
+        "https://nqnjwccsg0.execute-api.ap-northeast-2.amazonaws.com/06-05-demo",
+        {
+          eventName: "10s",
+          time: eventTime,
+          user: user,
+          foodId: foodId,
+        }
+      );
     }
   }, [time]);
 

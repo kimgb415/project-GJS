@@ -77,7 +77,7 @@ export default function BasicInfo({ navigation }) {
           onPress={() => {
             sendHttpRequest(
               "POST",
-              "https://nqnjwccsg0.execute-api.ap-northeast-2.amazonaws.com/beta_0510/user/basic/info",
+              "https://nqnjwccsg0.execute-api.ap-northeast-2.amazonaws.com/06-05-demo/user/basic/info",
               fullInfo
             );
             navigation.navigate("FoodSelect");

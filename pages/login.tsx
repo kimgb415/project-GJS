@@ -5,37 +5,31 @@ import { UserId } from "../context/UserId";
 
 export default function Login({ navigation }) {
   const { user, submitUserId } = useContext(UserId);
-  const [whatIsNext, setWhatIsNext] = useState("BasicInfo");
-  const [canSubmit, setCanSubmit] = useState(false);
+  const [canNotSubmit, setCanNotSubmit] = useState(false);
 
   const submitHandler = async () => {
     await sendHttpRequest(
       "POST",
-      "https://nqnjwccsg0.execute-api.ap-northeast-2.amazonaws.com/beta_0510/user/basic/id",
+      "https://nqnjwccsg0.execute-api.ap-northeast-2.amazonaws.com/06-05-demo/user/basic/id",
       { id: user }
     ).then((res) => {
-      if (res.errorType === "ValueError") setCanSubmit(true);
-      else {
-        setCanSubmit(false);
-        let value = res.statusCode == 200 ? "BasicInfo" : "Main";
-        setWhatIsNext(value);
+      if (res.statusCode == 200) {
+        navigation.navigate("BasicInfo");
+      } else {
+        navigation.navigate("FoodRecommend");
       }
     });
-    // navigation.navigate("FoodSelect");
-    navigation.navigate("FoodRecommend");
   };
 
   useEffect(() => {
     sendHttpRequest(
       "POST",
-      "https://nqnjwccsg0.execute-api.ap-northeast-2.amazonaws.com/beta_0510/user/basic/id",
+      "https://nqnjwccsg0.execute-api.ap-northeast-2.amazonaws.com/06-05-demo/user/basic/id",
       { id: user }
     ).then((res) => {
-      if (res.errorType === "ValueError") setCanSubmit(true);
-      else {
-        setCanSubmit(false);
-        let value = res.statusCode == 200 ? "BasicInfo" : "Main";
-        setWhatIsNext(value);
+      if (res.errorType === "ValueError") setCanNotSubmit(true);
+      else if (res.statusCode == 200) {
+        setCanNotSubmit(false);
       }
     });
   }, [user]);
@@ -51,7 +45,11 @@ export default function Login({ navigation }) {
         />
       </View>
       <View style={styles.submitButton}>
-        <Button title="Submit" disabled={canSubmit} onPress={submitHandler} />
+        <Button
+          title="Submit"
+          disabled={canNotSubmit}
+          onPress={submitHandler}
+        />
       </View>
     </View>
   );

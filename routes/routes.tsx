@@ -41,12 +41,16 @@ export default function Routes() {
   // };
 
   const sendFavourite = (time, foodId) => {
-    sendHttpRequest("POST", "uri", {
-      eventName: "favourite",
-      time: time,
-      user: user,
-      foodId: foodId,
-    });
+    sendHttpRequest(
+      "POST",
+      "https://nqnjwccsg0.execute-api.ap-northeast-2.amazonaws.com/06-05-demo",
+      {
+        eventName: "favourite",
+        time: time,
+        user: user,
+        foodId: foodId,
+      }
+    );
   };
 
   // const forFade = ({ current, closing }) => ({

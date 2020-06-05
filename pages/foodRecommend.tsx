@@ -49,12 +49,16 @@ export default function FoodRecommend({ navigation }) {
   ]);
 
   const sendItemClicked = (time, foodId) => {
-    sendHttpRequest("POST", "uri", {
-      eventName: "itemClicked",
-      time: time,
-      user: user,
-      foodId: foodId,
-    });
+    sendHttpRequest(
+      "POST",
+      "https://nqnjwccsg0.execute-api.ap-northeast-2.amazonaws.com/06-05-demo",
+      {
+        eventName: "itemClicked",
+        time: time,
+        user: user,
+        foodId: foodId,
+      }
+    );
   };
 
   useEffect(() => {
