@@ -104,7 +104,7 @@ export default function OnlyOneFood({ route, navigation }) {
           });
         }}
       >
-        <OneFood foodSource={route.params} imageDimension={dimension} />
+        <OneFood foodSource={route.params} />
       </View>
       <View style={{ flex: 1 }}>
         <View style={styles.buttonContainer}>
@@ -112,7 +112,7 @@ export default function OnlyOneFood({ route, navigation }) {
             <Button
               title="Recipe"
               onPress={() => {
-                let time = new Date().getTime();
+                let time = new Date();
                 startUpdate(time);
                 navigation.navigate("Recipe", { recipe: route.params.recipe });
               }}

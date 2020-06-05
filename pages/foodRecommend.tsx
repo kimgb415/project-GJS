@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import {
   View,
+  Text,
   StyleSheet,
   ActivityIndicator,
   FlatList,
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
 
 export default function FoodRecommend({ navigation }) {
   const { imageSourceUpdate } = useContext(DimensionConext);
-  const { foodIdUpdate } = useContext(Duration);
+  const { duration, startUpdate, foodIdUpdate } = useContext(Duration);
   const [imageInfo, setImageInfo] = useState([
     { key: "1", foodname: "food1", source: undefined, recipe: "undefined" },
     { key: "2", foodname: "food2", source: undefined, recipe: "undefined" },
@@ -75,6 +76,7 @@ export default function FoodRecommend({ navigation }) {
         <ActivityIndicator size="large" color="#0000ff" />
       ) : (
         <View style={{ flex: 1 }}>
+          {/* <Text style={{ fontSize: 100 }}>{duration}</Text> */}
           <FlatList
             style={{ height: "100%" }}
             keyExtractor={(item, index) => item.key}
@@ -83,9 +85,11 @@ export default function FoodRecommend({ navigation }) {
               <TouchableOpacity
                 style={{ height: screenWidth * 0.75, width: screenWidth }}
                 onPress={() => {
+                  let startTime = new Date();
+                  startUpdate(startTime);
                   imageSourceUpdate(food.item.source);
                   foodIdUpdate(food.item.key);
-                  navigation.navigate("OnlyOneFood", food.item);
+                  navigation.navigate("Recipe", food.item);
                 }}
                 onLayout={(e) => {
                   setDimension([
@@ -98,7 +102,7 @@ export default function FoodRecommend({ navigation }) {
                   ]);
                 }}
               >
-                <OneFood foodSource={food.item} imageDimension={dimension} />
+                <OneFood foodSource={food.item} />
               </TouchableOpacity>
             )}
           />

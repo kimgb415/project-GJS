@@ -10,11 +10,10 @@ import Main from "../pages/main";
 import FoodRecommend from "../pages/foodRecommend";
 import Recipe from "../pages/recipe";
 import OnlyOneFood from "../pages/onlyOneFood";
-import UserIdProvider, { UserId } from "../context/UserId";
+import { UserId } from "../context/UserId";
 import Login from "../pages/login";
 import { Duration } from "../context/howLong";
 import DimensionProvider from "../context/dimensionContext";
-import OverlayImage from "../component/overlayImage";
 import sendHttpRequest from "../API/sendHttpRequest";
 
 const Stack = createStackNavigator();
@@ -41,20 +40,24 @@ export default function Routes() {
     sendHttpRequest("Post", "uri", durationInfo);
   };
 
-  const forFade = ({ current, closing }) => ({
-    cardStyle: {
-      opacity: current.progress,
-    },
-    overlayStyle: {
-      opacity: 1 - current.progress,
-    },
-  });
-  const config = {
-    animation: "timing",
-    config: {
-      duration: 2000,
-    },
+  const sendFavourite = () => {
+    sendHttpRequest("Post", "uri", { foodId: foodId });
   };
+
+  // const forFade = ({ current, closing }) => ({
+  //   cardStyle: {
+  //     opacity: current.progress,
+  //   },
+  //   overlayStyle: {
+  //     opacity: 1 - current.progress,
+  //   },
+  // });
+  // const config = {
+  //   animation: "timing",
+  //   config: {
+  //     duration: 2000,
+  //   },
+  // };
 
   return (
     <DimensionProvider>
@@ -96,40 +99,32 @@ export default function Routes() {
             }}
           />
           <Stack.Screen name="FoodRecommend" component={FoodRecommend} />
-          <Stack.Screen
-            name="OnlyOneFood"
-            component={OnlyOneFood}
-            options={({ route, navigation }) => {
-              return {
-                gestureEnabled: false,
-                cardOverlayEnabled: true,
-                cardOverlay: () => {
-                  return <OverlayImage />;
-                },
-                cardStyleInterpolator: forFade,
-                transitionSpec: {
-                  open: config,
-                  close: config,
-                },
-              };
-            }}
-          />
+          <Stack.Screen name="OnlyOneFood" component={OnlyOneFood} />
           <Stack.Screen name="Map" component={Map} />
           <Stack.Screen
             name="Recipe"
             component={Recipe}
             options={({ navigation }) => {
               return {
-                headerLeft: () => (
+                // headerLeft: () => (
+                //   <TouchableOpacity
+                //     onPress={() => {
+                //       let end = new Date();
+                //       durationUpdate(end);
+                //       sendDuratoinInformation();
+                //       navigation.navigate("FoodRecommend");
+                //     }}
+                //   >
+                //     <Text>Back</Text>
+                //   </TouchableOpacity>
+                // ),
+                headerRight: () => (
                   <TouchableOpacity
                     onPress={() => {
-                      let end = new Date().getTime();
-                      durationUpdate(end);
-                      sendDuratoinInformation();
-                      navigation.navigate("OnlyOneFood");
+                      sendFavourite();
                     }}
                   >
-                    <Text>Test</Text>
+                    <Text>Favourite</Text>
                   </TouchableOpacity>
                 ),
                 gestureEnabled: false,

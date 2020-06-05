@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Image, View, Text } from "react-native";
 
-const OneFood = ({ foodSource, imageDimension }) => {
+const OneFood = ({ foodSource }) => {
   const [widthValue, setWidthValue] = useState(100);
   const [heightValue, setHeightValue] = useState(100);
 
