@@ -12,6 +12,7 @@ import OneFood from "../component/oneFood";
 import { DimensionConext } from "../context/dimensionContext";
 import { Duration } from "../context/howLong";
 import sendHttpRequest from "../API/sendHttpRequest";
+import { UserId } from "../context/UserId";
 
 const styles = StyleSheet.create({
   container: {
@@ -26,6 +27,7 @@ const styles = StyleSheet.create({
 export default function FoodRecommend({ navigation }) {
   const { imageSourceUpdate } = useContext(DimensionConext);
   const { duration, startUpdate, foodIdUpdate } = useContext(Duration);
+  const { user } = useContext(UserId);
   const [imageInfo, setImageInfo] = useState([
     { key: "1", foodname: "food1", source: undefined, recipe: "undefined" },
     { key: "2", foodname: "food2", source: undefined, recipe: "undefined" },
@@ -46,8 +48,13 @@ export default function FoodRecommend({ navigation }) {
     },
   ]);
 
-  const sendItemClicked = (foodId) => {
-    sendHttpRequest("POST", "uri", { foodId: foodId });
+  const sendItemClicked = (time, foodId) => {
+    sendHttpRequest("POST", "uri", {
+      eventName: "itemClicked",
+      time: time,
+      user: user,
+      foodId: foodId,
+    });
   };
 
   useEffect(() => {
@@ -94,7 +101,7 @@ export default function FoodRecommend({ navigation }) {
                   startUpdate(startTime);
                   imageSourceUpdate(food.item.source);
                   foodIdUpdate(food.item.key);
-                  sendItemClicked(food.item.key);
+                  sendItemClicked(startTime, food.item.key);
                   navigation.navigate("Recipe", food.item);
                 }}
                 onLayout={(e) => {

@@ -19,29 +19,34 @@ import sendHttpRequest from "../API/sendHttpRequest";
 const Stack = createStackNavigator();
 
 export default function Routes() {
-  const { userId, device, location } = useContext(UserId);
+  const { user, device, location } = useContext(UserId);
   const { foodId, duration, durationUpdate } = useContext(Duration);
   const [durationInfo, setDurationInfo] = useState({
     foodId: null,
-    userId: null,
+    user: null,
     time: 0,
     location: {},
     device: "unknown",
   });
 
-  const sendDuratoinInformation = () => {
-    setDurationInfo({
-      foodId: foodId,
-      userId: userId,
-      time: duration,
-      device: device,
-      location: location,
-    });
-    sendHttpRequest("Post", "uri", durationInfo);
-  };
+  // const sendDuratoinInformation = () => {
+  //   setDurationInfo({
+  //     foodId: foodId,
+  //     user: user,
+  //     time: duration,
+  //     device: device,
+  //     location: location,
+  //   });
+  //   sendHttpRequest("Post", "uri", durationInfo);
+  // };
 
-  const sendFavourite = () => {
-    sendHttpRequest("Post", "uri", { foodId: foodId });
+  const sendFavourite = (time, foodId) => {
+    sendHttpRequest("POST", "uri", {
+      eventName: "favourite",
+      time: time,
+      user: user,
+      foodId: foodId,
+    });
   };
 
   // const forFade = ({ current, closing }) => ({
@@ -121,7 +126,8 @@ export default function Routes() {
                 headerRight: () => (
                   <TouchableOpacity
                     onPress={() => {
-                      sendFavourite();
+                      let time = new Date();
+                      sendFavourite(time, foodId);
                     }}
                   >
                     <Text>Favourite</Text>

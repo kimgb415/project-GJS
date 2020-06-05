@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import OneFood from "../component/oneFood";
 import sendHttpRequest from "../API/sendHttpRequest";
+import { UserId } from "../context/UserId";
+import { Duration } from "../context/howLong";
 
 const styles = StyleSheet.create({
   cotainer: {
@@ -21,6 +23,8 @@ const styles = StyleSheet.create({
 function Recipe({ route }) {
   const [time, setTime] = useState(0);
   const [test, setTest] = useState("fail");
+  const { user } = useContext(UserId);
+  const { foodId } = useContext(Duration);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -32,7 +36,13 @@ function Recipe({ route }) {
   useEffect(() => {
     if (time > 5) {
       setTest("true");
-      sendHttpRequest("POST", "uri", {});
+      let eventTime = new Date();
+      sendHttpRequest("POST", "uri", {
+        eventName: "10s",
+        time: eventTime,
+        user: user,
+        foodId: foodId,
+      });
     }
   }, [time]);
 
