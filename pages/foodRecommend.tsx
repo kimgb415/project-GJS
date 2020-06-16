@@ -29,13 +29,55 @@ export default function FoodRecommend({ navigation }) {
   const { duration, startUpdate, foodIdUpdate } = useContext(Duration);
   const { user } = useContext(UserId);
   const [imageInfo, setImageInfo] = useState([
-    { key: "1", foodname: "food1", source: undefined, recipe: "undefined" },
-    { key: "2", foodname: "food2", source: undefined, recipe: "undefined" },
-    { key: "3", foodname: "food3", source: undefined, recipe: "undefined" },
-    { key: "4", foodname: "food4", source: undefined, recipe: "undefined" },
-    { key: "5", foodname: "food5", source: undefined, recipe: "undefined" },
-    { key: "6", foodname: "food6", source: undefined, recipe: "undefined" },
-    { key: "7", foodname: "food7", source: undefined, recipe: "undefined" },
+    {
+      num: 1,
+      key: "1",
+      foodname: "food1",
+      source: undefined,
+      recipe: "undefined",
+    },
+    {
+      num: 2,
+      key: "2",
+      foodname: "food2",
+      source: undefined,
+      recipe: "undefined",
+    },
+    {
+      num: 3,
+      key: "3",
+      foodname: "food3",
+      source: undefined,
+      recipe: "undefined",
+    },
+    {
+      num: 4,
+      key: "4",
+      foodname: "food4",
+      source: undefined,
+      recipe: "undefined",
+    },
+    {
+      num: 5,
+      key: "5",
+      foodname: "food5",
+      source: undefined,
+      recipe: "undefined",
+    },
+    {
+      num: 6,
+      key: "6",
+      foodname: "food6",
+      source: undefined,
+      recipe: "undefined",
+    },
+    {
+      num: 7,
+      key: "7",
+      foodname: "food7",
+      source: undefined,
+      recipe: "undefined",
+    },
   ]);
   const [isLoading, setIsLoaindg] = useState(true);
   const [screenWidth, setScreenWidth] = useState(0);
@@ -84,6 +126,7 @@ export default function FoodRecommend({ navigation }) {
         .then((res) => res.json())
         .then((res) => {
           let single = {
+            num: i + 1,
             key: res["body"]["id"],
             foodname: res["body"]["name"],
             source: res["body"]["main_img"],
