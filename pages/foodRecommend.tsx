@@ -121,7 +121,7 @@ export default function FoodRecommend({ navigation }) {
     let result = [{}];
     for (let i = 0; i < 7; i++) {
       await fetch(
-        "https://nqnjwccsg0.execute-api.ap-northeast-2.amazonaws.com/beta_05_04/food-info"
+        `https://nqnjwccsg0.execute-api.ap-northeast-2.amazonaws.com/06-05-demo/food-info?id=${user}`
       )
         .then((res) => res.json())
         .then((res) => {
