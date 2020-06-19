@@ -16,6 +16,7 @@ const OneFood = ({ foodSource }) => {
       >
         <Image
           style={{ width: widthValue, height: heightValue }}
+          resizeMethod="resize"
           source={{
             uri: `data:image/png;base64,${foodSource.source}`,
           }}
@@ -35,7 +36,7 @@ const OneFood = ({ foodSource }) => {
         ) : foodSource.num == 5 ? (
           <Text>most popular food</Text>
         ) : (
-          <Text>Random Recommendation</Text>
+          <Text>New Food</Text>
         )}
       </View>
     </View>

@@ -4,6 +4,7 @@ import FoodWorldCup from "../component/foodWorldCup";
 import RatingSlider from "../component/slider";
 import { UserId } from "../context/UserId";
 import sendHttpRequest from "../API/sendHttpRequest";
+import { Case } from "../context/caseContext";
 
 const styles = StyleSheet.create({
   container: {
@@ -13,7 +14,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   submitButton: {
-    flex: 1,
+    height: 40,
+    width: 90,
     flexDirection: "row-reverse",
   },
 });
@@ -26,8 +28,11 @@ export default function FoodSelect({ navigation }) {
   });
   const [counting, setCounting] = useState(0);
   const [sliderSetting, setSliderSetting] = useState(true);
+  const [buttonSetting, setButtonSetting] = useState(true);
   const { user } = useContext(UserId);
+  const { mode } = useContext(Case);
   const [results, setResults] = useState({
+    mode: mode,
     user: user,
     result: { id: "", rating: 0 },
   });
@@ -35,7 +40,7 @@ export default function FoodSelect({ navigation }) {
   const pressHandler = () => {
     sendHttpRequest(
       "PUT",
-      "https://nqnjwccsg0.execute-api.ap-northeast-2.amazonaws.com/beta_05_12/user/rating",
+      "https://nqnjwccsg0.execute-api.ap-northeast-2.amazonaws.com/06-05-demo/user/rating",
       results
     );
     setCounting(counting + 1);
@@ -45,6 +50,7 @@ export default function FoodSelect({ navigation }) {
 
   const slidingHandler = (value: number) => {
     setResults({
+      mode: mode,
       user: user,
       result: { id: imageInfo.key, rating: value },
     });
@@ -53,7 +59,7 @@ export default function FoodSelect({ navigation }) {
   useEffect(() => {
     const fetchData = async () => {
       await fetch(
-        "https://nqnjwccsg0.execute-api.ap-northeast-2.amazonaws.com/beta_05_04/food-info"
+        `https://nqnjwccsg0.execute-api.ap-northeast-2.amazonaws.com/06-05-demo/food-info?id=${user}&mode=${mode}`
       )
         .then((res) => res.json())
         .then((res) => {
@@ -62,8 +68,14 @@ export default function FoodSelect({ navigation }) {
             foodname: res["body"]["name"],
             source: res["body"]["main_img"],
           });
+          setResults({
+            mode: mode,
+            user: user,
+            result: { id: res["body"]["id"], rating: 3 },
+          });
         });
       setSliderSetting(false);
+      setButtonSetting(false);
     };
     fetchData();
   }, [counting]);
@@ -81,7 +93,11 @@ export default function FoodSelect({ navigation }) {
         />
       </View>
       <View style={styles.submitButton}>
-        <Button title="Submit" onPress={pressHandler} />
+        <Button
+          disabled={buttonSetting}
+          title="Submit"
+          onPress={pressHandler}
+        />
       </View>
     </View>
   );

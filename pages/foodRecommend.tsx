@@ -13,6 +13,7 @@ import { DimensionConext } from "../context/dimensionContext";
 import { Duration } from "../context/howLong";
 import sendHttpRequest from "../API/sendHttpRequest";
 import { UserId } from "../context/UserId";
+import { Case } from "../context/caseContext";
 
 const styles = StyleSheet.create({
   container: {
@@ -27,6 +28,7 @@ const styles = StyleSheet.create({
 export default function FoodRecommend({ navigation }) {
   const { imageSourceUpdate } = useContext(DimensionConext);
   const { duration, startUpdate, foodIdUpdate } = useContext(Duration);
+  const { mode } = useContext(Case);
   const { user } = useContext(UserId);
   const [imageInfo, setImageInfo] = useState([
     {
@@ -98,6 +100,7 @@ export default function FoodRecommend({ navigation }) {
       {
         eventName: "refresh",
         time: startTime,
+        mode: mode,
         user: user,
         foodId: foodId,
       }
@@ -111,6 +114,7 @@ export default function FoodRecommend({ navigation }) {
       {
         eventName: "itemClicked",
         time: startTime,
+        mode: mode,
         user: user,
         foodId: foodId,
       }
@@ -121,7 +125,7 @@ export default function FoodRecommend({ navigation }) {
     let result = [{}];
     for (let i = 0; i < 7; i++) {
       await fetch(
-        `https://nqnjwccsg0.execute-api.ap-northeast-2.amazonaws.com/06-05-demo/food-info?id=${user}`
+        `https://nqnjwccsg0.execute-api.ap-northeast-2.amazonaws.com/06-05-demo/food-info?id=${user}&mode=${mode}`
       )
         .then((res) => res.json())
         .then((res) => {

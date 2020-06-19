@@ -15,11 +15,14 @@ import Login from "../pages/login";
 import { Duration } from "../context/howLong";
 import DimensionProvider from "../context/dimensionContext";
 import sendHttpRequest from "../API/sendHttpRequest";
+import Demo from "../pages/demo";
+import { Case } from "../context/caseContext";
 
 const Stack = createStackNavigator();
 
 export default function Routes() {
   const { user, device, location } = useContext(UserId);
+  const { mode } = useContext(Case);
   const { foodId, duration, durationUpdate } = useContext(Duration);
   const [durationInfo, setDurationInfo] = useState({
     foodId: null,
@@ -47,6 +50,7 @@ export default function Routes() {
       {
         eventName: "favourite",
         time: time,
+        mode: mode,
         user: user,
         foodId: foodId,
       }
@@ -73,9 +77,19 @@ export default function Routes() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
+            name="Demo"
+            component={Demo}
+            options={{ gestureEnabled: false }}
+          />
+          <Stack.Screen
             name="Login"
             component={Login}
-            options={{ gestureEnabled: false }}
+            options={{
+              gestureEnabled: false,
+              headerLeft: () => {
+                <View></View>;
+              },
+            }}
           />
           <Stack.Screen
             name="BasicInfo"

@@ -1,9 +1,11 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import { StyleSheet, Text, TextInput, View, Button } from "react-native";
 import sendHttpRequest from "../API/sendHttpRequest";
 import { UserId } from "../context/UserId";
+import { Case } from "../context/caseContext";
 
 export default function Login({ navigation }) {
+  const { mode } = useContext(Case);
   const { user, submitUserId } = useContext(UserId);
   const [canNotSubmit, setCanNotSubmit] = useState(false);
 
@@ -11,7 +13,7 @@ export default function Login({ navigation }) {
     await sendHttpRequest(
       "POST",
       "https://nqnjwccsg0.execute-api.ap-northeast-2.amazonaws.com/06-05-demo/user/basic/id",
-      { id: user }
+      { mode: mode, id: user }
     ).then((res) => {
       if (res.statusCode == 200) {
         navigation.navigate("BasicInfo");
@@ -25,7 +27,7 @@ export default function Login({ navigation }) {
     sendHttpRequest(
       "POST",
       "https://nqnjwccsg0.execute-api.ap-northeast-2.amazonaws.com/06-05-demo/user/basic/id",
-      { id: user }
+      { mode: mode, id: user }
     ).then((res) => {
       if (res.errorType === "ValueError") setCanNotSubmit(true);
       else if (res.statusCode == 200) {
@@ -68,7 +70,8 @@ const styles = StyleSheet.create({
   },
 
   submitButton: {
-    flex: 2,
+    height: 40,
+    width: 80,
     flexDirection: "row-reverse",
     margin: 20,
   },

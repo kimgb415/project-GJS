@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import sendHttpRequest from "../API/sendHttpRequest";
 import { UserId } from "../context/UserId";
+import { Case } from "../context/caseContext";
 
 export default function BasicInfo({ navigation }) {
   const [selectedSexValue, setSelectedSexValue] = useState("Male");
@@ -17,12 +18,14 @@ export default function BasicInfo({ navigation }) {
   const [weightValue, setWeightText] = useState(null);
   const [buttonClickable, setButtonClickable] = useState(true);
   const [fullInfo, setFullInfo] = useState({});
+  const { mode } = useContext(Case);
   const { user } = useContext(UserId);
 
   useEffect(() => {
     if (!(ageValue === null || heightValue === null || weightValue === null)) {
       setButtonClickable(false);
       setFullInfo({
+        mode: mode,
         id: user,
         age: ageValue,
         gender: selectedSexValue === "Male",

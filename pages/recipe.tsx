@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import OneFood from "../component/oneFood";
 import sendHttpRequest from "../API/sendHttpRequest";
 import { UserId } from "../context/UserId";
 import { Duration } from "../context/howLong";
+import { Case } from "../context/caseContext";
 
 const styles = StyleSheet.create({
   cotainer: {
@@ -24,6 +25,7 @@ function Recipe({ route }) {
   const [time, setTime] = useState(0);
   const [test, setTest] = useState("fail");
   const { user } = useContext(UserId);
+  const { mode } = useContext(Case);
   const { foodId } = useContext(Duration);
 
   useEffect(() => {
@@ -43,6 +45,7 @@ function Recipe({ route }) {
         {
           eventName: "10s",
           time: eventTime,
+          mode: mode,
           user: user,
           foodId: foodId,
         }
@@ -56,10 +59,12 @@ function Recipe({ route }) {
         <OneFood foodSource={route.params} />
       </View>
       <View style={styles.content}>
-        <Text>{route.params.recipe}</Text>
         <Text>
           {test} + {time}
         </Text>
+        <ScrollView style={{ flex: 1, margin: 10 }}>
+          <Text>{route.params.recipe}</Text>
+        </ScrollView>
       </View>
     </View>
   );

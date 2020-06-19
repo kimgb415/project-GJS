@@ -12,7 +12,7 @@ export default function RatingSlider(props) {
     <View style={styles.screen}>
       <Slider
         maximumValue={5}
-        minimumValue={1}
+        minimumValue={2}
         value={3}
         step={1}
         disabled={props.sliderSetting}

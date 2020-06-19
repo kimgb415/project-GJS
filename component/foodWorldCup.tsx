@@ -24,6 +24,7 @@ export default function foodWorldCup(props) {
       <TouchableOpacity disabled={true} style={{ flex: 1 }}>
         <Image
           style={{ width: widthValue, height: heightValue }}
+          resizeMethod="resize"
           source={{
             uri: `data:image/png;base64,${props.foodSource.source}`,
           }}
