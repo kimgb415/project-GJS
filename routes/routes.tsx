@@ -17,6 +17,7 @@ import DimensionProvider from "../context/dimensionContext";
 import sendHttpRequest from "../API/sendHttpRequest";
 import Demo from "../pages/demo";
 import { Case } from "../context/caseContext";
+import SliderProvider from "../context/sliderContext";
 
 const Stack = createStackNavigator();
 
@@ -74,98 +75,100 @@ export default function Routes() {
 
   return (
     <DimensionProvider>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="Demo"
-            component={Demo}
-            options={{ gestureEnabled: false }}
-          />
-          <Stack.Screen
-            name="Login"
-            component={Login}
-            options={{
-              gestureEnabled: false,
-              headerLeft: () => {
-                <View></View>;
-              },
-            }}
-          />
-          <Stack.Screen
-            name="BasicInfo"
-            component={BasicInfo}
-            options={{
-              gestureEnabled: false,
-              headerLeft: () => {
-                <View></View>;
-              },
-            }}
-          />
-          <Stack.Screen
-            name="FoodSelect"
-            component={FoodSelect}
-            options={{
-              gestureEnabled: false,
-              headerLeft: () => {
-                <View></View>;
-              },
-            }}
-          />
-          <Stack.Screen
-            name="Main"
-            component={Main}
-            options={{
-              gestureEnabled: false,
-              headerLeft: () => {
-                <View></View>;
-              },
-            }}
-          />
-          <Stack.Screen
-            name="FoodRecommend"
-            component={FoodRecommend}
-            options={{
-              gestureEnabled: false,
-              headerLeft: () => {
-                <View></View>;
-              },
-            }}
-          />
-          <Stack.Screen name="OnlyOneFood" component={OnlyOneFood} />
-          <Stack.Screen name="Map" component={Map} />
-          <Stack.Screen
-            name="Recipe"
-            component={Recipe}
-            options={({ navigation }) => {
-              return {
-                // headerLeft: () => (
-                //   <TouchableOpacity
-                //     onPress={() => {
-                //       let end = new Date();
-                //       durationUpdate(end);
-                //       sendDuratoinInformation();
-                //       navigation.navigate("FoodRecommend");
-                //     }}
-                //   >
-                //     <Text>Back</Text>
-                //   </TouchableOpacity>
-                // ),
-                headerRight: () => (
-                  <TouchableOpacity
-                    onPress={() => {
-                      let time = new Date();
-                      sendFavourite(time, foodId);
-                    }}
-                  >
-                    <Text>Favourite</Text>
-                  </TouchableOpacity>
-                ),
+      <SliderProvider>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen
+              name="Demo"
+              component={Demo}
+              options={{ gestureEnabled: false }}
+            />
+            <Stack.Screen
+              name="Login"
+              component={Login}
+              options={{
                 gestureEnabled: false,
-              };
-            }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+                headerLeft: () => {
+                  <View></View>;
+                },
+              }}
+            />
+            <Stack.Screen
+              name="BasicInfo"
+              component={BasicInfo}
+              options={{
+                gestureEnabled: false,
+                headerLeft: () => {
+                  <View></View>;
+                },
+              }}
+            />
+            <Stack.Screen
+              name="FoodSelect"
+              component={FoodSelect}
+              options={{
+                gestureEnabled: false,
+                headerLeft: () => {
+                  <View></View>;
+                },
+              }}
+            />
+            <Stack.Screen
+              name="Main"
+              component={Main}
+              options={{
+                gestureEnabled: false,
+                headerLeft: () => {
+                  <View></View>;
+                },
+              }}
+            />
+            <Stack.Screen
+              name="FoodRecommend"
+              component={FoodRecommend}
+              options={{
+                gestureEnabled: false,
+                headerLeft: () => {
+                  <View></View>;
+                },
+              }}
+            />
+            <Stack.Screen name="OnlyOneFood" component={OnlyOneFood} />
+            <Stack.Screen name="Map" component={Map} />
+            <Stack.Screen
+              name="Recipe"
+              component={Recipe}
+              options={({ navigation }) => {
+                return {
+                  // headerLeft: () => (
+                  //   <TouchableOpacity
+                  //     onPress={() => {
+                  //       let end = new Date();
+                  //       durationUpdate(end);
+                  //       sendDuratoinInformation();
+                  //       navigation.navigate("FoodRecommend");
+                  //     }}
+                  //   >
+                  //     <Text>Back</Text>
+                  //   </TouchableOpacity>
+                  // ),
+                  headerRight: () => (
+                    <TouchableOpacity
+                      onPress={() => {
+                        let time = new Date();
+                        sendFavourite(time, foodId);
+                      }}
+                    >
+                      <Text>Favourite</Text>
+                    </TouchableOpacity>
+                  ),
+                  gestureEnabled: false,
+                };
+              }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </SliderProvider>
     </DimensionProvider>
   );
 }

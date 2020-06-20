@@ -5,6 +5,7 @@ import RatingSlider from "../component/slider";
 import { UserId } from "../context/UserId";
 import sendHttpRequest from "../API/sendHttpRequest";
 import { Case } from "../context/caseContext";
+import { SliderContext } from "../context/sliderContext";
 
 const styles = StyleSheet.create({
   container: {
@@ -21,6 +22,7 @@ const styles = StyleSheet.create({
 });
 
 export default function FoodSelect({ navigation }) {
+  const { value, valueUpdate } = useContext(SliderContext);
   const [imageInfo, setImageInfo] = useState({
     key: "1",
     foodname: "food1",
@@ -54,6 +56,7 @@ export default function FoodSelect({ navigation }) {
       user: user,
       result: { id: imageInfo.key, rating: value },
     });
+    valueUpdate(value);
   };
 
   useEffect(() => {
@@ -71,7 +74,7 @@ export default function FoodSelect({ navigation }) {
           setResults({
             mode: mode,
             user: user,
-            result: { id: res["body"]["id"], rating: 3 },
+            result: { id: res["body"]["id"], rating: value },
           });
         });
       setSliderSetting(false);
